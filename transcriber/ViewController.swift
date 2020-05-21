@@ -11,6 +11,8 @@ import AVKit
 import AVFoundation
 import AWSCognito
 import AWSS3
+import AWSAuthUI
+import AWSAuthCore
 
 class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDelegate,UITableViewDataSource {
     var recordingSession:AVAudioSession!
@@ -18,7 +20,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
     var audioPlayer:AVAudioPlayer!
     
     let bucketName = "raw-audio-to-transcribe"
-    //let bucketName = "mp3-transcribe-sentiment-dynamodb-bucket"
     @IBOutlet weak var buttonLabel: UIButton!
     
     @IBOutlet weak var myTableView: UITableView!
@@ -58,9 +59,28 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
     }
     
     
+    func showSignIn() {
+        if !AWSSignInManager.sharedInstance().isLoggedIn {
+            AWSAuthUIViewController
+                .presentViewController(with: self.navigationController!,
+                           configuration: nil,
+                           completionHandler: {(provider: AWSSignInProvider, error: Error?) in
+                    if error != nil {
+                        print("Error occured: \(String(describing: error))")
+                    } else {
+                        print("Logged in with provider: \(provider.identityProviderName) with Token: \(provider.token())")
+                    }
+                })
+        }
+    }
+      
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        showSignIn() 
         
         //Setting up session
         

@@ -9,5 +9,8 @@ target 'transcriber' do
   pod 'AWSCore'
   pod 'AWSCognito'
   pod 'AWSS3'
+  pod 'AWSUserPoolsSignIn'
+  pod 'AWSAuthUI'
+  pod 'AWSMobileClient'
 
 end

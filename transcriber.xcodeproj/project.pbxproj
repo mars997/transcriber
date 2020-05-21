@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,7 @@
 		D4957669246BABC900B7C742 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4957667246BABC900B7C742 /* Main.storyboard */; };
 		D495766B246BABCA00B7C742 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D495766A246BABCA00B7C742 /* Assets.xcassets */; };
 		D495766E246BABCA00B7C742 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D495766C246BABCA00B7C742 /* LaunchScreen.storyboard */; };
+		D4A6D9F22476EA5300366E05 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = D4A6D9F12476EA5300366E05 /* awsconfiguration.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		D495766A246BABCA00B7C742 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D495766D246BABCA00B7C742 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D495766F246BABCA00B7C742 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D4A6D9F12476EA5300366E05 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = SOURCE_ROOT; };
 		EC6FF2953FCF3A3E999EAE51 /* Pods-transcriber.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-transcriber.release.xcconfig"; path = "Target Support Files/Pods-transcriber/Pods-transcriber.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -56,7 +58,6 @@
 				3FC628E5FFCFB43F9C51284C /* Pods-transcriber.debug.xcconfig */,
 				EC6FF2953FCF3A3E999EAE51 /* Pods-transcriber.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -81,6 +82,7 @@
 		D4957660246BABC900B7C742 /* transcriber */ = {
 			isa = PBXGroup;
 			children = (
+				D4A6D9F12476EA5300366E05 /* awsconfiguration.json */,
 				D4957661246BABC900B7C742 /* AppDelegate.swift */,
 				D4957663246BABC900B7C742 /* SceneDelegate.swift */,
 				D4957665246BABC900B7C742 /* ViewController.swift */,
@@ -152,6 +154,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4A6D9F22476EA5300366E05 /* awsconfiguration.json in Resources */,
 				D495766E246BABCA00B7C742 /* LaunchScreen.storyboard in Resources */,
 				D495766B246BABCA00B7C742 /* Assets.xcassets in Resources */,
 				D4957669246BABC900B7C742 /* Main.storyboard in Resources */,

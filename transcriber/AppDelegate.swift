@@ -7,15 +7,24 @@
 //
 
 import UIKit
+import AWSMobileClient
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?,
+                     annotation: Any) -> Bool {
+        return AWSMobileClient.sharedInstance().interceptApplication(application, open: url,
+                                                                     sourceApplication: sourceApplication,
+                                                                     annotation: annotation)
+    }
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        return true
+        return AWSMobileClient.sharedInstance().interceptApplication(application, didFinishLaunchingWithOptions: launchOptions)
     }
 
     // MARK: UISceneSession Lifecycle
