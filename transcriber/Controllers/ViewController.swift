@@ -21,8 +21,19 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
     
     let bucketName = "raw-audio-to-transcribe"
     @IBOutlet weak var buttonLabel: UIButton!
-    
     @IBOutlet weak var myTableView: UITableView!
+    
+    var voiceRecords: [VoiceRecord] = [
+        VoiceRecord(user: "hamed@exoptima.com", title: "first conversation",    audioPath: getDirectory().appendingPathComponent("20.mp4"),
+                    date: Date.init()),
+        VoiceRecord(user: "hamed@exoptima.com", title: "second conversation",    audioPath: getDirectory().appendingPathComponent("21.mp4"),
+                    date: Date.init()),
+        VoiceRecord(user: "hamed@exoptima.com", title: "third conversation",    audioPath: getDirectory().appendingPathComponent("22.mp4"),
+                    date: Date.init())
+
+
+    ]
+    
     var numberOfRecords = 0
     @IBAction func record(_ sender: Any) {
         //Check if we have an active recorder
@@ -31,7 +42,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
             numberOfRecords += 1
             let filename = getDirectory().appendingPathComponent("\(numberOfRecords).mp4")
         
-            let settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC), AVSampleRateKey: 16000, AVNumberOfChannelsKey: 1, AVEncoderAudioQualityKey: AVAudioQuality.max.rawValue]
+            let settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC), AVSampleRateKey: 44100, AVNumberOfChannelsKey: 1, AVEncoderAudioQualityKey: AVAudioQuality.max.rawValue]
             
             
             //start audio recording
