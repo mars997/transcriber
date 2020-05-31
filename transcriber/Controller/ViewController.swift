@@ -18,7 +18,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
     var audioPlayer:AVAudioPlayer!
     
     let bucketName = "raw-audio-to-transcribe"
-    //let bucketName = "mp3-transcribe-sentiment-dynamodb-bucket"
     @IBOutlet weak var buttonLabel: UIButton!
     
     @IBOutlet weak var myTableView: UITableView!
