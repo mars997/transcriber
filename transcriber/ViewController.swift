@@ -30,7 +30,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
             numberOfRecords += 1
             let filename = getDirectory().appendingPathComponent("\(numberOfRecords).mp4")
         
-            let settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC), AVSampleRateKey: 16000, AVNumberOfChannelsKey: 1, AVEncoderAudioQualityKey: AVAudioQuality.max.rawValue]
+            let settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC), AVSampleRateKey: 44100, AVNumberOfChannelsKey: 1, AVEncoderAudioQualityKey: AVAudioQuality.max.rawValue]
             
             
             //start audio recording
