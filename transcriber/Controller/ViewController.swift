@@ -13,11 +13,12 @@ import AWSCognito
 import AWSS3
 
 class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDelegate,UITableViewDataSource {
+    
     var recordingSession:AVAudioSession!
     var audioRecorder:AVAudioRecorder!
     var audioPlayer:AVAudioPlayer!
     
-    let bucketName = "raw-audio-to-transcribe"
+    let awsAudioBucketName = Constants.audioBucketName
     @IBOutlet weak var buttonLabel: UIButton!
     
     @IBOutlet weak var myTableView: UITableView!
@@ -33,13 +34,13 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
             
             
             //start audio recording
-            do{
+            do {
                 audioRecorder = try AVAudioRecorder(url: filename, settings: settings)
                 audioRecorder.delegate = self
                 audioRecorder.record()
                 buttonLabel.setTitle("Stop Recording", for: .normal)
-                }
-            catch{
+            }
+            catch {
                 displayAlert(title: "Oops!", message: "Recording failed!")
             }
         }
@@ -74,21 +75,18 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
         }
         
         let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast2,
-            identityPoolId:"us-east-2:ec9eff09-1d4e-47b8-80ef-bdc6146b8a18")
+                                                                identityPoolId:Constants.identityPoolId)
 
          let configuration = AWSServiceConfiguration(region:.USEast2, credentialsProvider:credentialsProvider)
         
          AWSServiceManager.default().defaultServiceConfiguration = configuration
-         
-         
-        
     }
     
     
     func uploadFile(with key: String) {
         let localFileUrl = getDirectory().appendingPathComponent(key)
         let request = AWSS3TransferManagerUploadRequest()!
-        request.bucket = bucketName
+        request.bucket = awsAudioBucketName
         request.key = key
         request.body = localFileUrl
         request.acl = .publicReadWrite

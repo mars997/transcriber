@@ -14,6 +14,10 @@
 		D4957669246BABC900B7C742 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4957667246BABC900B7C742 /* Main.storyboard */; };
 		D495766B246BABCA00B7C742 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D495766A246BABCA00B7C742 /* Assets.xcassets */; };
 		D495766E246BABCA00B7C742 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D495766C246BABCA00B7C742 /* LaunchScreen.storyboard */; };
+		D4AA60EF248D1DB700C56498 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AA60EE248D1DB700C56498 /* Category.swift */; };
+		D4E8E559248369260073EF67 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E8E558248369260073EF67 /* Constants.swift */; };
+		D4E8E55B24836C1F0073EF67 /* RecorderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E8E55A24836C1F0073EF67 /* RecorderModel.swift */; };
+		D4E8E55D2483719D0073EF67 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E8E55C2483719D0073EF67 /* Record.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +31,10 @@
 		D495766A246BABCA00B7C742 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D495766D246BABCA00B7C742 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D495766F246BABCA00B7C742 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D4AA60EE248D1DB700C56498 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		D4E8E558248369260073EF67 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D4E8E55A24836C1F0073EF67 /* RecorderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderModel.swift; sourceTree = "<group>"; };
+		D4E8E55C2483719D0073EF67 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		EC6FF2953FCF3A3E999EAE51 /* Pods-transcriber.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-transcriber.release.xcconfig"; path = "Target Support Files/Pods-transcriber/Pods-transcriber.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,6 +96,7 @@
 				D495766A246BABCA00B7C742 /* Assets.xcassets */,
 				D495766C246BABCA00B7C742 /* LaunchScreen.storyboard */,
 				D495766F246BABCA00B7C742 /* Info.plist */,
+				D4E8E558248369260073EF67 /* Constants.swift */,
 			);
 			path = transcriber;
 			sourceTree = "<group>";
@@ -111,6 +120,9 @@
 		D4AEE664248340A40025FD06 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D4AA60EE248D1DB700C56498 /* Category.swift */,
+				D4E8E55C2483719D0073EF67 /* Record.swift */,
+				D4E8E55A24836C1F0073EF67 /* RecorderModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -232,7 +244,11 @@
 			files = (
 				D4957666246BABC900B7C742 /* ViewController.swift in Sources */,
 				D4957662246BABC900B7C742 /* AppDelegate.swift in Sources */,
+				D4E8E55D2483719D0073EF67 /* Record.swift in Sources */,
 				D4957664246BABC900B7C742 /* SceneDelegate.swift in Sources */,
+				D4E8E55B24836C1F0073EF67 /* RecorderModel.swift in Sources */,
+				D4E8E559248369260073EF67 /* Constants.swift in Sources */,
+				D4AA60EF248D1DB700C56498 /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
