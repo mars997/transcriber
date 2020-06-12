@@ -11,23 +11,25 @@ import AVFoundation
 import RealmSwift
 
 
-class RecorderModel:UIViewController,AVAudioRecorderDelegate
+class RecorderModel:NSObject,AVAudioRecorderDelegate
 {
     let realm = try! Realm()
-    var recordingSession:AVAudioSession!
+    var recordingSession:AVAudioSession! = AVAudioSession.sharedInstance()
     var audioRecorder:AVAudioRecorder!
     var audioPlayer:AVAudioPlayer!
-    let audioBucketName = Constants.audioBucketName
-    var numberOfRecords = 0
+    let audioBucketName = K.audioBucketName
+    var numberOfRecords = UserDefaults.standard.object(forKey: "myNumber") as? Int ?? 0
     
+    var recorderState = ""
     
-    
-    func startStopRecorder() -> Bool {
+    func startStopPauseRecorder(_ button:String) -> (status: String, fileNane: String?) {
         
-        if audioRecorder == nil
+        let filename = getDirectory().appendingPathComponent("\(numberOfRecords).mp4")
+        
+        if audioRecorder == nil // Recorder State is stopped
         {
+
             numberOfRecords += 1
-            let filename = getDirectory().appendingPathComponent("\(numberOfRecords).mp4")
             
             let settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC), AVSampleRateKey: 44100, AVNumberOfChannelsKey: 1, AVEncoderAudioQualityKey: AVAudioQuality.max.rawValue]
             
@@ -36,20 +38,35 @@ class RecorderModel:UIViewController,AVAudioRecorderDelegate
             do{
                 audioRecorder = try AVAudioRecorder(url: filename, settings: settings)
                 audioRecorder.delegate = self
+                try recordingSession.setCategory(.playAndRecord)
                 audioRecorder.record()
-                return true
+                recorderState = RecorderK.recording  //"Recording"
+                return (RecorderK.recording, filename.absoluteString)
             }
             catch{
-                return false
+                recorderState = RecorderK.error  //"Crashed"
+                return (RecorderK.error, filename.absoluteString)
             }
         }
         else {
-            //Stopping audio recording
-            audioRecorder.stop()
-            audioRecorder = nil
-            
-            UserDefaults.standard.set(numberOfRecords, forKey: "myNumber")
-            return true
+            if button == RecorderK.pauseButton {
+                if audioRecorder.isRecording {
+                    audioRecorder.pause()
+                    recorderState = RecorderK.paused //"Paused"
+                    return (RecorderK.paused, filename.absoluteString)
+                } else {
+                    audioRecorder.record()
+                    recorderState = RecorderK.recording //"Recording"
+                    return (RecorderK.recording, filename.absoluteString)
+                }
+                
+            } else {
+                audioRecorder.stop()
+                audioRecorder = nil
+                recorderState = RecorderK.stopped //"Stopped"
+                UserDefaults.standard.set(numberOfRecords, forKey: "myNumber")
+                return (RecorderK.stopped,filename.absoluteString)
+            }
         }
     }
     
@@ -62,5 +79,3 @@ class RecorderModel:UIViewController,AVAudioRecorderDelegate
     }
     
 }
-
-

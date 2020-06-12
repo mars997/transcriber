@@ -11,6 +11,7 @@ import AVKit
 import AVFoundation
 import AWSCognito
 import AWSS3
+import RealmSwift
 
 class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDelegate,UITableViewDataSource {
     
@@ -18,64 +19,49 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
     var audioRecorder:AVAudioRecorder!
     var audioPlayer:AVAudioPlayer!
     
-    let awsAudioBucketName = Constants.audioBucketName
+    let awsAudioBucketName = K.audioBucketName
+    
+    
+    let recorderModel = RecorderModel()
+    
     @IBOutlet weak var buttonLabel: UIButton!
+    
+    @IBOutlet weak var pauseButton: UIButton!
+    
     
     @IBOutlet weak var myTableView: UITableView!
     var numberOfRecords = 0
-    @IBAction func record(_ sender: Any) {
-        //Check if we have an active recorder
-        if audioRecorder == nil
-        {
-            numberOfRecords += 1
-            let filename = getDirectory().appendingPathComponent("\(numberOfRecords).mp4")
+    
+    
+    @IBAction func pausePressed(_ sender: Any) {
+        recorderModel.startStopPauseRecorder(RecorderK.pauseButton)
+        pauseButton.title(for: UIControl.State.normal) == "Pause" ? pauseButton.setTitle("Resume", for: UIControl.State.normal) : pauseButton.setTitle("Pause", for: UIControl.State.normal)
+    }
+    
+    
+    
+    
+    @IBAction func recordPressed(_ sender: Any) {
         
-            let settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC), AVSampleRateKey: 44100, AVNumberOfChannelsKey: 1, AVEncoderAudioQualityKey: AVAudioQuality.max.rawValue]
-            
-            
-            //start audio recording
-            do {
-                audioRecorder = try AVAudioRecorder(url: filename, settings: settings)
-                audioRecorder.delegate = self
-                audioRecorder.record()
-                buttonLabel.setTitle("Stop Recording", for: .normal)
-            }
-            catch {
-                displayAlert(title: "Oops!", message: "Recording failed!")
-            }
-        }
-        else {
-            //Stopping audio recording
-            audioRecorder.stop()
-            audioRecorder = nil
-            
-            UserDefaults.standard.set(numberOfRecords, forKey: "myNumber")
-            myTableView.reloadData()
-            
-            buttonLabel.setTitle("Start Recording", for: .normal)
-        }
+        let (status, urlString) = recorderModel.startStopPauseRecorder(RecorderK.recordButton)
+        myTableView.reloadData()
         
+        if status == RecorderK.stopped {
+            
+        }
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-        //Setting up session
-        
-        recordingSession = AVAudioSession.sharedInstance()
-        if let number:Int = UserDefaults.standard.object(forKey: "myNumber") as? Int
-        {
-            numberOfRecords = number
-        }
+
         AVAudioSession.sharedInstance().requestRecordPermission { (hasPermission) in
             if hasPermission
             {print ("Accepted")}
         }
         
         let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast2,
-                                                                identityPoolId:Constants.identityPoolId)
+                                                                identityPoolId:K.identityPoolId)
 
          let configuration = AWSServiceConfiguration(region:.USEast2, credentialsProvider:credentialsProvider)
         
@@ -101,10 +87,6 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
             }
             return nil
         }
-        
-        
-        
-        
     }
 
     
@@ -125,7 +107,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
     }
     //Setting up TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section:Int) -> Int {
-        return numberOfRecords
+        return recorderModel.numberOfRecords
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath:IndexPath) -> UITableViewCell {
