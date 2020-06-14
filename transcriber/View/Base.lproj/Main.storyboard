@@ -81,8 +81,8 @@
                     </view>
                     <connections>
                         <outlet property="buttonLabel" destination="PSW-7x-6kr" id="Bik-2e-c0b"/>
-                        <outlet property="myTableView" destination="Z7x-Gq-b8i" id="IOr-40-fWd"/>
                         <outlet property="pauseButton" destination="AvJ-ug-l2D" id="AJf-WS-5qu"/>
+                        <outlet property="tableView" destination="Z7x-Gq-b8i" id="IOr-40-fWd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

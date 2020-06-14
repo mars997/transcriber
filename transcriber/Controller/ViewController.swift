@@ -29,7 +29,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
     @IBOutlet weak var pauseButton: UIButton!
     
     
-    @IBOutlet weak var myTableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     var numberOfRecords = 0
     
     
@@ -44,7 +44,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
     @IBAction func recordPressed(_ sender: Any) {
         
         let (status, urlString) = recorderModel.startStopPauseRecorder(RecorderK.recordButton)
-        myTableView.reloadData()
+        tableView.reloadData()
         
         if status == RecorderK.stopped {
             
@@ -55,6 +55,8 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        tableView.register(UINib(nibName:"RecordCell", bundle: nil), forCellReuseIdentifier: "ReusableRecordCell")
+        
         AVAudioSession.sharedInstance().requestRecordPermission { (hasPermission) in
             if hasPermission
             {print ("Accepted")}
@@ -111,8 +113,10 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath:IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = String(indexPath.row + 1)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableRecordCell", for: indexPath) as! RecordCell
+        cell.titleText.text = String(indexPath.row + 1)
+        
+        //cell.textLabel?.text = String(indexPath.row + 1)
         return cell
     }
     
