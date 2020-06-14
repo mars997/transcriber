@@ -54,7 +54,8 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.tableView.rowHeight = 60
+        
         tableView.register(UINib(nibName:"RecordCell", bundle: nil), forCellReuseIdentifier: "ReusableRecordCell")
         
         AVAudioSession.sharedInstance().requestRecordPermission { (hasPermission) in
@@ -126,7 +127,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
         {
             audioPlayer = try AVAudioPlayer(contentsOf: path)
             audioPlayer.play()
-            uploadFile(with: ("\(indexPath.row + 1).mp4"))
+       //     uploadFile(with: ("\(indexPath.row + 1).mp4"))
         }
         catch{
             

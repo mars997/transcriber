@@ -15,5 +15,6 @@ class  Record: Object {
     @objc dynamic var Notes:String = ""
     @objc dynamic var startTime = Date()
     @objc dynamic var duration = 0.0
+    @objc dynamic var transcribed = false
     var parentCategory = LinkingObjects(fromType: Category.self, property: "records")
 }

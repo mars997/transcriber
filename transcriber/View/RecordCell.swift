@@ -25,6 +25,7 @@ class RecordCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        titleText.layer.cornerRadius = titleText.frame.height/5
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
