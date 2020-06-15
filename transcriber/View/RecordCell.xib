@@ -17,7 +17,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="554" height="55"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="5nA-v8-8wa">
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="5nA-v8-8wa">
                         <rect key="frame" x="10" y="3" width="534" height="43.333333333333336"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="YdY-tN-JF7">
@@ -70,6 +70,7 @@
                 <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="5nA-v8-8wa" secondAttribute="trailing" constant="10" id="J8S-0N-iMj"/>
+                    <constraint firstItem="5nA-v8-8wa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="3" id="UR5-lW-rlz"/>
                     <constraint firstItem="5nA-v8-8wa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="UqM-h5-Ked"/>
                 </constraints>
             </tableViewCellContentView>
