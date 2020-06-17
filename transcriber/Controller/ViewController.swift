@@ -24,7 +24,8 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
     
     let recorderModel = RecorderModel()
     
-    @IBOutlet weak var buttonLabel: UIButton!
+
+    @IBOutlet weak var recordButton: UIButton!
     
     @IBOutlet weak var pauseButton: UIButton!
     
@@ -32,10 +33,19 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
     @IBOutlet weak var tableView: UITableView!
     var numberOfRecords = 0
     
+    @IBOutlet weak var durationLabel: UILabel!
     
     @IBAction func pausePressed(_ sender: Any) {
-        recorderModel.startStopPauseRecorder(RecorderK.pauseButton)
-        pauseButton.title(for: UIControl.State.normal) == "Pause" ? pauseButton.setTitle("Resume", for: UIControl.State.normal) : pauseButton.setTitle("Pause", for: UIControl.State.normal)
+        let (status, urlString) = recorderModel.startStopPauseRecorder(RecorderK.pauseButton)
+        
+        if status == RecorderK.paused {
+                        pauseButton.setBackgroundImage(UIImage(systemName: "mic.circle"), for: UIControl.State.normal)
+        } else if status == RecorderK.recording {
+            
+            pauseButton.setBackgroundImage(UIImage(systemName: "pause.circle"), for: UIControl.State.normal)
+            
+        }
+
     }
     
     
@@ -44,17 +54,41 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
     @IBAction func recordPressed(_ sender: Any) {
         
         let (status, urlString) = recorderModel.startStopPauseRecorder(RecorderK.recordButton)
+        
+        
         tableView.reloadData()
         
         if status == RecorderK.stopped {
+                        recordButton.setBackgroundImage(UIImage(systemName: "mic"), for: UIControl.State.normal)
+                        pauseButton.setBackgroundImage(UIImage(systemName: "pause.circle"), for: UIControl.State.normal)
+        } else if status == RecorderK.recording {
+            
+            recordButton.setBackgroundImage(UIImage(systemName: "stop"), for: UIControl.State.normal)
+            
+            Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
             
         }
     }
     
+    @objc func updateTimer() {
+        if let duration = recorderModel.audioRecorder?.currentTime.stringFromTimeInterval()
+        {self.durationLabel.text = duration
+            print(duration)}
+    }
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 60
+        
+//        navigationController?.navigationBar.barTintColor = UIColor.init(red: 185.0/255.0, green: 215.0/255.0, blue: 234.0/255.0, alpha: 1)
+        
+        
+ //       navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Buy Credit", style: .plain, target: self, action: #selector(addTapped))
+ //       navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(addTapped))
+        
+        
+        
         
         tableView.register(UINib(nibName:"RecordCell", bundle: nil), forCellReuseIdentifier: "ReusableRecordCell")
         
@@ -116,7 +150,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
     func tableView(_ tableView: UITableView, cellForRowAt indexPath:IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableRecordCell", for: indexPath) as! RecordCell
         cell.titleText.text = String(indexPath.row + 1)
-        
+
         //cell.textLabel?.text = String(indexPath.row + 1)
         return cell
     }

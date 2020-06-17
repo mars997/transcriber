@@ -19,8 +19,31 @@ class RecorderModel:NSObject,AVAudioRecorderDelegate
     var audioPlayer:AVAudioPlayer!
     let audioBucketName = K.audioBucketName
     var numberOfRecords = UserDefaults.standard.object(forKey: "myNumber") as? Int ?? 0
-    
+    var startTime = ""
+    var recordedDuration = ""
     var recorderState = ""
+    
+    func getNow() -> String{
+
+             let date = Date()
+             let calender = Calendar.current
+             let components = calender.dateComponents([.year,.month,.day,.hour,.minute,.second], from: date)
+
+             let year = components.year
+             let month = components.month
+             let day = components.day
+             let hour = components.hour
+             let minute = components.minute
+             let second = components.second
+
+             let now_string = String(year!) + "/" + String(month!) + "/" + String(day!) + " " + String(hour!)  + ":" + String(minute!) + ":" +  String(second!)
+
+             return now_string
+
+         }
+
+    
+    
     
     func startStopPauseRecorder(_ button:String) -> (status: String, fileNane: String?) {
         
@@ -28,12 +51,17 @@ class RecorderModel:NSObject,AVAudioRecorderDelegate
         
         if audioRecorder == nil // Recorder State is stopped
         {
-
-            numberOfRecords += 1
             
+            
+            if button == RecorderK.recordButton
+            {numberOfRecords += 1
+            
+            startTime = getNow()
+                
             let settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC), AVSampleRateKey: 44100, AVNumberOfChannelsKey: 1, AVEncoderAudioQualityKey: AVAudioQuality.max.rawValue]
             
             
+                
             //start audio recording
             do{
                 audioRecorder = try AVAudioRecorder(url: filename, settings: settings)
@@ -46,6 +74,10 @@ class RecorderModel:NSObject,AVAudioRecorderDelegate
             catch{
                 recorderState = RecorderK.error  //"Crashed"
                 return (RecorderK.error, filename.absoluteString)
+                }
+                
+            } else {
+                return ("","")
             }
         }
         else {
@@ -61,15 +93,41 @@ class RecorderModel:NSObject,AVAudioRecorderDelegate
                 }
                 
             } else {
+                recordedDuration = audioRecorder.currentTime.stringFromTimeInterval()
                 audioRecorder.stop()
                 audioRecorder = nil
                 recorderState = RecorderK.stopped //"Stopped"
+                
+                //here we have to record the info to Record Object Relam
+                
+                let newRecord = Record()
+                newRecord.id = "\(numberOfRecords)"
+                newRecord.user = "PlaceHolderUser"
+                newRecord.startTime = startTime
+                newRecord.url = " \(getDirectory().appendingPathComponent("\(numberOfRecords).mp4"))"
+                newRecord.duration = recordedDuration
+                
+                save(newRecord)
+                
                 UserDefaults.standard.set(numberOfRecords, forKey: "myNumber")
                 return (RecorderK.stopped,filename.absoluteString)
             }
         }
     }
     
+    func save(_ record: Record)
+    {
+        do {
+        try self.realm.write {
+            self.realm.add(record)
+            }
+        }
+        catch
+        {  print ("Error Saving Record")
+            
+                }
+            
+        }
     
     func getDirectory() -> URL
     {
@@ -78,4 +136,20 @@ class RecorderModel:NSObject,AVAudioRecorderDelegate
         return DocumentDirectory
     }
     
+}
+
+extension TimeInterval{
+
+    func stringFromTimeInterval() -> String {
+
+        let time = NSInteger(self)
+
+        let ms = Int((self.truncatingRemainder(dividingBy: 1)) * 1000)
+        let seconds = time % 60
+        let minutes = (time / 60) % 60
+        let hours = (time / 3600)
+
+        return String(format: "%0.2d:%0.2d:%0.2d",hours,minutes,seconds,ms)
+
+    }
 }

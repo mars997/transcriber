@@ -17,6 +17,7 @@
 		D4AA60EF248D1DB700C56498 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AA60EE248D1DB700C56498 /* Category.swift */; };
 		D4AA60F22494474E00C56498 /* RecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AA60F02494474E00C56498 /* RecordCell.swift */; };
 		D4AA60F32494474E00C56498 /* RecordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4AA60F12494474E00C56498 /* RecordCell.xib */; };
+		D4AA60F5249877A300C56498 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AA60F4249877A300C56498 /* SettingsViewController.swift */; };
 		D4E8E559248369260073EF67 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E8E558248369260073EF67 /* Constants.swift */; };
 		D4E8E55B24836C1F0073EF67 /* RecorderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E8E55A24836C1F0073EF67 /* RecorderModel.swift */; };
 		D4E8E55D2483719D0073EF67 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E8E55C2483719D0073EF67 /* Record.swift */; };
@@ -36,6 +37,7 @@
 		D4AA60EE248D1DB700C56498 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		D4AA60F02494474E00C56498 /* RecordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordCell.swift; sourceTree = "<group>"; };
 		D4AA60F12494474E00C56498 /* RecordCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecordCell.xib; sourceTree = "<group>"; };
+		D4AA60F4249877A300C56498 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D4E8E558248369260073EF67 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D4E8E55A24836C1F0073EF67 /* RecorderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderModel.swift; sourceTree = "<group>"; };
 		D4E8E55C2483719D0073EF67 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 		D4AEE6622483407D0025FD06 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D4AA60F4249877A300C56498 /* SettingsViewController.swift */,
 				D4957665246BABC900B7C742 /* ViewController.swift */,
 			);
 			path = Controller;
@@ -257,6 +260,7 @@
 				D4E8E55B24836C1F0073EF67 /* RecorderModel.swift in Sources */,
 				D4E8E559248369260073EF67 /* Constants.swift in Sources */,
 				D4AA60EF248D1DB700C56498 /* Category.swift in Sources */,
+				D4AA60F5249877A300C56498 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
