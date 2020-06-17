@@ -10,6 +10,6 @@
   pod 'AWSCognito'
   pod 'AWSS3'
   pod 'RealmSwift'
-  
+  pod 'IQKeyboardManagerSwift'
   
 end

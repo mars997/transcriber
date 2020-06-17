@@ -16,7 +16,7 @@ import RealmSwift
 class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDelegate,UITableViewDataSource {
     
     var recordingSession:AVAudioSession!
-    var audioRecorder:AVAudioRecorder!
+//    var audioRecorder:AVAudioRecorder!
     var audioPlayer:AVAudioPlayer!
     
     let awsAudioBucketName = K.audioBucketName
@@ -81,14 +81,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
         super.viewDidLoad()
         self.tableView.rowHeight = 60
         
-//        navigationController?.navigationBar.barTintColor = UIColor.init(red: 185.0/255.0, green: 215.0/255.0, blue: 234.0/255.0, alpha: 1)
-        
-        
- //       navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Buy Credit", style: .plain, target: self, action: #selector(addTapped))
- //       navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(addTapped))
-        
-        
-        
+
         
         tableView.register(UINib(nibName:"RecordCell", bundle: nil), forCellReuseIdentifier: "ReusableRecordCell")
         
@@ -159,6 +152,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
         let path = getDirectory().appendingPathComponent("\(indexPath.row + 1).mp4")
         do
         {
+
             audioPlayer = try AVAudioPlayer(contentsOf: path)
             audioPlayer.play()
        //     uploadFile(with: ("\(indexPath.row + 1).mp4"))
@@ -167,5 +161,10 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
             
         }
     }
+    
+
+
+    
+    
 }
 

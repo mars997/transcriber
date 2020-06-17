@@ -10,52 +10,55 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" selectionStyle="default" indentationLevel="5" indentationWidth="0.0" reuseIdentifier="ReusableRecordCell" rowHeight="55" id="KGk-i7-Jjw" customClass="RecordCell" customModule="transcriber" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="554" height="55"/>
+        <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" selectionStyle="default" indentationLevel="5" indentationWidth="0.0" reuseIdentifier="ReusableRecordCell" rowHeight="69" id="KGk-i7-Jjw" customClass="RecordCell" customModule="transcriber" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="554" height="69"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <tableViewCellContentView key="contentView" autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="554" height="55"/>
+                <rect key="frame" x="0.0" y="0.0" width="554" height="69"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="5nA-v8-8wa">
-                        <rect key="frame" x="10" y="3" width="534" height="43.333333333333336"/>
+                        <rect key="frame" x="10" y="3" width="534" height="54"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="YdY-tN-JF7">
-                                <rect key="frame" x="0.0" y="0.0" width="534" height="22"/>
+                                <rect key="frame" x="0.0" y="0.0" width="534" height="30"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="playButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6W6-M7-X8s">
-                                        <rect key="frame" x="0.0" y="1.9999999999999982" width="15" height="18"/>
-                                        <state key="normal" backgroundImage="play" catalog="system">
-                                            <color key="titleColor" systemColor="quaternaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.17999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="playButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6W6-M7-X8s">
+                                        <rect key="frame" x="0.0" y="0.0" width="23" height="30"/>
+                                        <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <state key="normal" image="play" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="27" weight="thin"/>
                                         </state>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="transcribeButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O5n-kB-CUW">
-                                        <rect key="frame" x="27" y="1.3333333333333339" width="22.333333333333329" height="21"/>
-                                        <state key="normal" backgroundImage="text.bubble" catalog="system">
-                                            <color key="titleColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="transcribeButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O5n-kB-CUW">
+                                        <rect key="frame" x="35" y="0.0" width="35" height="30"/>
+                                        <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <state key="normal" image="text.bubble" catalog="system">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="titleShadowColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="27" scale="default" weight="thin"/>
                                         </state>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="229" horizontalCompressionResistancePriority="748" verticalCompressionResistancePriority="748" restorationIdentifier="titleText" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="80z-VA-qmL">
-                                        <rect key="frame" x="61.333333333333343" y="0.0" width="472.66666666666663" height="22"/>
+                                        <rect key="frame" x="82" y="0.0" width="452" height="30"/>
                                         <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uLq-Rc-vGX">
-                                <rect key="frame" x="0.0" y="28.999999999999996" width="534" height="14.333333333333332"/>
+                                <rect key="frame" x="0.0" y="37" width="534" height="17"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" restorationIdentifier="date" text="[6/14/2020 13:05:08]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWv-XM-769">
-                                        <rect key="frame" x="0.0" y="0.0" width="466.33333333333331" height="14.333333333333334"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="458" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="duration" text="[00:00:15]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="erG-NM-LPL">
-                                        <rect key="frame" x="474.33333333333331" y="0.0" width="59.666666666666686" height="14.333333333333334"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <rect key="frame" x="466" y="0.0" width="68" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -82,7 +85,7 @@
                 <outlet property="titleText" destination="80z-VA-qmL" id="XV0-KM-mMk"/>
                 <outlet property="transcribeButton" destination="O5n-kB-CUW" id="NGP-mN-Rdh"/>
             </connections>
-            <point key="canvasLocation" x="128.98550724637681" y="141.62946428571428"/>
+            <point key="canvasLocation" x="128.98550724637681" y="136.94196428571428"/>
         </tableViewCell>
     </objects>
     <resources>
