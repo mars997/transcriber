@@ -14,71 +14,113 @@ import AWSS3
 import RealmSwift
 
 class ViewController: UIViewController,RecordCellDelegate, AVAudioRecorderDelegate,UITableViewDelegate,UITableViewDataSource {
-    func playButtonPressed(id: Int) {
-        do
-          {
-              let path =  getDirectory().appendingPathComponent("\(id).mp4" )
-              audioPlayer = try AVAudioPlayer(contentsOf: path)
-              audioPlayer.play()
-         //     uploadFile(with: ("\(indexPath.row + 1).mp4"))
-          }
-          catch{
-              
-          }
-    }
     
-    func transcribeButtonPressed(id: Int) {
-        uploadFile(with: ("\(id).mp4"))
-
-    }
     
     
     var recordingSession:AVAudioSession!
-//    var audioRecorder:AVAudioRecorder!
+    //    var audioRecorder:AVAudioRecorder!
     var audioPlayer:AVAudioPlayer!
     let awsAudioBucketName = K.audioBucketName
     let recorderModel = RecorderModel()
     var numberOfRecords = 0
-
+    var currentlyLitPlayButton:UIButton?
+    var playTimer:Timer?
+    var recordTimer:Timer?
+    
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var pauseButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var durationLabel: UILabel!
-
-
+    
+    
+    
+    
+    func titleFieldChanged(id: Int, sender: Any) {
+        let recorderModel = RecorderModel()
+        recorderModel.loadRecords(id: String(id))
+        let titleField = (sender as! UITextField)
+        recorderModel.updateTitle(titleField.text!)
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    func playButtonPressed(id: Int,sender: Any) {
+        do
+        {
+            if let prevPlayButton = currentlyLitPlayButton
+            {
+                prevPlayButton.setImage(UIImage(systemName:"play"), for: .normal)
+                if prevPlayButton == (sender as! UIButton) && audioPlayer.isPlaying
+                {
+                    audioPlayer.stop()
+                    return
+                }
+            }
+            
+            let path =  getDirectory().appendingPathComponent("\(id).mp4" )
+            audioPlayer = try AVAudioPlayer(contentsOf: path)
+            audioPlayer.play()
+            (sender as! UIButton).setImage(UIImage(systemName:"play.fill"), for: .normal)
+            currentlyLitPlayButton = (sender as! UIButton)
+            playTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(checkIfPlaying), userInfo: nil, repeats: true)
+            
+        }
+        catch{
+            
+        }
+    }
+    
+    
+    
+    func transcribeButtonPressed(id: Int,sender: Any) {
+        uploadFile(with: ("\(id).mp4"))
+        
+    }
+    
+    
     @IBAction func pausePressed(_ sender: Any) {
-        let (status, urlString) = recorderModel.startStopPauseRecorder(RecorderK.pauseButton)
+        let (status, _) = recorderModel.startStopPauseRecorder(RecorderK.pauseButton)
         
         if status == RecorderK.paused {
-                        pauseButton.setBackgroundImage(UIImage(systemName: "mic.circle"), for: UIControl.State.normal)
+            tableView.isUserInteractionEnabled = true //When recording is not in progress users can interact with the table of records
+            pauseButton.setBackgroundImage(UIImage(systemName: "mic.circle"), for: UIControl.State.normal)
         } else if status == RecorderK.recording {
-            
+            tableView.isUserInteractionEnabled = false //when recording users cannot play recorded audio
             pauseButton.setBackgroundImage(UIImage(systemName: "pause.circle"), for: UIControl.State.normal)
             
         }
-
+        
     }
     
     @IBAction func recordPressed(_ sender: Any) {
         
-        let (status, urlString) = recorderModel.startStopPauseRecorder(RecorderK.recordButton)
+        let (status, _) = recorderModel.startStopPauseRecorder(RecorderK.recordButton)
         tableView.reloadData()
         if status == RecorderK.stopped {
-                        recordButton.setBackgroundImage(UIImage(systemName: "mic"), for: UIControl.State.normal)
-                        pauseButton.setBackgroundImage(UIImage(systemName: "pause.circle"), for: UIControl.State.normal)
+            tableView.isUserInteractionEnabled = true //When recording is not in progress users can interact with the table of records
+            recordButton.setBackgroundImage(UIImage(systemName: "mic"), for: UIControl.State.normal)
+            pauseButton.setBackgroundImage(UIImage(systemName: "pause.circle"), for: UIControl.State.normal)
+            recordTimer?.invalidate()
+            durationLabel.text = "00:00:00"
         } else if status == RecorderK.recording {
-            
+            tableView.isUserInteractionEnabled = false  //when recording users cannot play recorded audio
             recordButton.setBackgroundImage(UIImage(systemName: "stop"), for: UIControl.State.normal)
             
-            Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+            recordTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
         }
     }
     
-
     
-// MARK: viewDidLoad
+    
+    // MARK: viewDidLoad
     override func viewDidLoad() {
-     
+        
         super.viewDidLoad()
         self.tableView.rowHeight = 60
         
@@ -93,24 +135,24 @@ class ViewController: UIViewController,RecordCellDelegate, AVAudioRecorderDelega
         
         let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USEast2,
                                                                 identityPoolId:K.identityPoolId)
-
-         let configuration = AWSServiceConfiguration(region:.USEast2, credentialsProvider:credentialsProvider)
         
-         AWSServiceManager.default().defaultServiceConfiguration = configuration
+        let configuration = AWSServiceConfiguration(region:.USEast2, credentialsProvider:credentialsProvider)
+        
+        AWSServiceManager.default().defaultServiceConfiguration = configuration
     }
     
     
-
     
-
+    
+    
     
     //Function that displays an alert
-//    func displayAlert(title:String, message:String)
-//    {
-//        let alert = UIAlertController(title:title, message: message, preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title:"Dismiss", style:.default, handler:nil))
-//        present(alert, animated: true,completion:nil)
-//    }
+    //    func displayAlert(title:String, message:String)
+    //    {
+    //        let alert = UIAlertController(title:title, message: message, preferredStyle: .alert)
+    //        alert.addAction(UIAlertAction(title:"Dismiss", style:.default, handler:nil))
+    //        present(alert, animated: true,completion:nil)
+    //    }
     
     
     // MARK: Table View Settings
@@ -123,23 +165,25 @@ class ViewController: UIViewController,RecordCellDelegate, AVAudioRecorderDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath:IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableRecordCell", for: indexPath) as! RecordCell
         cell.titleText.text =
-            String(recorderModel.records?[indexPath.row].id ?? "No Id") +
             String(recorderModel.records?[indexPath.row].title ?? "No Title")
         
         cell.dateLabel.text = String(recorderModel.records?[indexPath.row].startTime ?? "No Date")
-
+        
         cell.durationLabel.text = String(recorderModel.records?[indexPath.row].duration ?? "No Duration")
         
         cell.playButton.tag = Int((recorderModel.records?[indexPath.row].id)!) ?? 0
         cell.transcribeButton.tag = Int((recorderModel.records?[indexPath.row].id)!) ?? 0
+        
+        cell.titleText.tag = Int((recorderModel.records?[indexPath.row].id)!) ?? 0
+        
         cell.cellDelegate = self
-  //      cell.id = Int((recorderModel.records?[indexPath.row].id)!)
-
+        //      cell.id = Int((recorderModel.records?[indexPath.row].id)!)
+        
         return cell
     }
     
     
-
+    
     // MARK: Helper Functions
     //Function that gets path to directory
     func getDirectory() -> URL
@@ -148,7 +192,7 @@ class ViewController: UIViewController,RecordCellDelegate, AVAudioRecorderDelega
         let DocumentDirectory = paths[0]
         return DocumentDirectory
     }
-
+    
     @objc func updateTimer() {
         if let duration = recorderModel.audioRecorder?.currentTime.stringFromTimeInterval()
         {self.durationLabel.text = duration
@@ -175,7 +219,15 @@ class ViewController: UIViewController,RecordCellDelegate, AVAudioRecorderDelega
             return nil
         }
     }
-
+    
+    
+    @objc func checkIfPlaying() {
+        if !audioPlayer.isPlaying {
+            currentlyLitPlayButton!.setImage(UIImage(systemName:"play"), for: .normal)
+            playTimer?.invalidate()
+        }
+    }
+    
     
 }
 

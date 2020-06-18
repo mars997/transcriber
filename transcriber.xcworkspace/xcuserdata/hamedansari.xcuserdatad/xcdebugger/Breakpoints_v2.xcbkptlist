@@ -28,8 +28,8 @@
             filePath = "transcriber/Controller/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
             landmarkName = "ViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -44,8 +44,8 @@
             filePath = "transcriber/Model/RecorderModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
             landmarkName = "startStopPauseRecorder(_:)"
             landmarkType = "7">
          </BreakpointContent>

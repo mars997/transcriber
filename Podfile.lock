@@ -4,7 +4,6 @@ PODS:
   - AWSCore (2.8.4)
   - AWSS3 (2.8.4):
     - AWSCore (= 2.8.4)
-  - BFWControls (3.1.2)
   - IQKeyboardManagerSwift (6.5.5)
   - Realm (5.0.2):
     - Realm/Headers (= 5.0.2)
@@ -16,7 +15,6 @@ DEPENDENCIES:
   - AWSCognito
   - AWSCore
   - AWSS3
-  - BFWControls
   - IQKeyboardManagerSwift
   - RealmSwift
 
@@ -25,7 +23,6 @@ SPEC REPOS:
     - AWSCognito
     - AWSCore
     - AWSS3
-    - BFWControls
     - IQKeyboardManagerSwift
     - Realm
     - RealmSwift
@@ -34,11 +31,10 @@ SPEC CHECKSUMS:
   AWSCognito: d7f7e9aaa26f163fe2d32114e28f59fa5d996805
   AWSCore: 734b0d67c2c77f6edae9e5520431a37310ea4193
   AWSS3: ead679e0887fa3ca8dddd054643a197b55360f1f
-  BFWControls: 36089fea1a54c6255ea86422877f723cc7a067ff
   IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
   Realm: 6b6f096671b64b04d08974177cabb2ff9343d153
   RealmSwift: a3db6be0488bf3e1d5314c2956cefe98a65cdd01
 
-PODFILE CHECKSUM: 4757f6a469d5f0692fc2848138856c774816fbe7
+PODFILE CHECKSUM: e312060c5d946c7c0a56ce03778b3a1aced40fe3
 
 COCOAPODS: 1.9.1

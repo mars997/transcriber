@@ -32,26 +32,32 @@ class RecorderModel:NSObject,AVAudioRecorderDelegate
         records = realm.objects(Record.self).sorted(byKeyPath: "startTime", ascending: false)
     }
     
+    func loadRecords(id: String)
+    {
+        records = realm.objects(Record.self).filter("id == '" + id + "'")
+        
+    }
+    
     
     func getNow() -> String{
-
-             let date = Date()
-             let calender = Calendar.current
-             let components = calender.dateComponents([.year,.month,.day,.hour,.minute,.second], from: date)
-
-             let year = components.year
-             let month = components.month
-             let day = components.day
-             let hour = components.hour
-             let minute = components.minute
-             let second = components.second
-
-             let now_string = String(year!) + "/" + String(format: "%02d",month!) + "/" + String(format: "%02d",day!) + " " + String(format: "%02d",hour!)  + ":" + String(format: "%02d",minute!) + ":" +  String(format: "%02d",second!)
-
-             return now_string
-
-         }
-
+        
+        let date = Date()
+        let calender = Calendar.current
+        let components = calender.dateComponents([.year,.month,.day,.hour,.minute,.second], from: date)
+        
+        let year = components.year
+        let month = components.month
+        let day = components.day
+        let hour = components.hour
+        let minute = components.minute
+        let second = components.second
+        
+        let now_string = String(year!) + "/" + String(format: "%02d",month!) + "/" + String(format: "%02d",day!) + " " + String(format: "%02d",hour!)  + ":" + String(format: "%02d",minute!) + ":" +  String(format: "%02d",second!)
+        
+        return now_string
+        
+    }
+    
     
     
     
@@ -65,25 +71,25 @@ class RecorderModel:NSObject,AVAudioRecorderDelegate
             
             if button == RecorderK.recordButton
             {numberOfRecords += 1
-            filename = getDirectory().appendingPathComponent("\(numberOfRecords).mp4")
-            startTime = getNow()
+                filename = getDirectory().appendingPathComponent("\(numberOfRecords).mp4")
+                startTime = getNow()
                 
-            let settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC), AVSampleRateKey: 44100, AVNumberOfChannelsKey: 1, AVEncoderAudioQualityKey: AVAudioQuality.max.rawValue]
-            
-            
+                let settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC), AVSampleRateKey: 44100, AVNumberOfChannelsKey: 1, AVEncoderAudioQualityKey: AVAudioQuality.max.rawValue]
                 
-            //start audio recording
-            do{
-                audioRecorder = try AVAudioRecorder(url: filename, settings: settings)
-                audioRecorder.delegate = self
-                try recordingSession.setCategory(.playAndRecord)
-                audioRecorder.record()
-                recorderState = RecorderK.recording  //"Recording"
-                return (RecorderK.recording, filename.absoluteString)
-            }
-            catch{
-                recorderState = RecorderK.error  //"Crashed"
-                return (RecorderK.error, filename.absoluteString)
+                
+                
+                //start audio recording
+                do{
+                    audioRecorder = try AVAudioRecorder(url: filename, settings: settings)
+                    audioRecorder.delegate = self
+                    try recordingSession.setCategory(.playAndRecord)
+                    audioRecorder.record()
+                    recorderState = RecorderK.recording  //"Recording"
+                    return (RecorderK.recording, filename.absoluteString)
+                }
+                catch{
+                    recorderState = RecorderK.error  //"Crashed"
+                    return (RecorderK.error, filename.absoluteString)
                 }
                 
             } else {
@@ -128,16 +134,31 @@ class RecorderModel:NSObject,AVAudioRecorderDelegate
     func save(_ record: Record)
     {
         do {
-        try self.realm.write {
-            self.realm.add(record)
+            try self.realm.write {
+                self.realm.add(record)
             }
         }
         catch
         {  print ("Error Saving Record")
             
-                }
+        }
+        
+    }
+    
+    func updateTitle(_ title: String)
+    {
+        do {
+            try self.realm.write {
+                records![0].title = title
+            }
+        }
+        catch
+        {  print ("Error updating Record")
             
         }
+        
+    }
+    
     
     func getDirectory() -> URL
     {
@@ -149,17 +170,17 @@ class RecorderModel:NSObject,AVAudioRecorderDelegate
 }
 
 extension TimeInterval{
-
+    
     func stringFromTimeInterval() -> String {
-
+        
         let time = NSInteger(self)
-
+        
         let ms = Int((self.truncatingRemainder(dividingBy: 1)) * 1000)
         let seconds = time % 60
         let minutes = (time / 60) % 60
         let hours = (time / 3600)
-
+        
         return String(format: "%0.2d:%0.2d:%0.2d",hours,minutes,seconds,ms)
-
+        
     }
 }
