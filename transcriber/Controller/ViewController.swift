@@ -45,18 +45,34 @@ class ViewController: UIViewController,RecordCellDelegate, AVAudioRecorderDelega
         {
             if let prevPlayButton = currentlyLitPlayButton
             {
-                prevPlayButton.setImage(UIImage(systemName:"play"), for: .normal)
-                if prevPlayButton == (sender as! UIButton) && audioPlayer.isPlaying
+             
+                if (sender as! UIButton).image(for: .normal) == UIImage(systemName:"play.circle")
                 {
-                    audioPlayer.stop()
+                    print("AudioPlayerNeedtoResume")
+                    (sender as! UIButton).setImage(UIImage(systemName:"pause"), for: .normal)
+                    
+                    audioPlayer.play()
                     return
                 }
+
+                
+                if prevPlayButton == (sender as! UIButton) && audioPlayer.isPlaying
+                {
+                    prevPlayButton.setImage(UIImage(systemName:"play.circle"), for: .normal)
+                    audioPlayer.pause()
+                    return
+                }
+                
+                
+                
             }
+            
+            
             
             let path =  getDirectory().appendingPathComponent("\(id).mp4" )
             audioPlayer = try AVAudioPlayer(contentsOf: path)
             audioPlayer.play()
-            (sender as! UIButton).setImage(UIImage(systemName:"play.fill"), for: .normal)
+            (sender as! UIButton).setImage(UIImage(systemName:"pause"), for: .normal)
             currentlyLitPlayButton = (sender as! UIButton)
             playTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(checkIfPlaying), userInfo: nil, repeats: true)
             
@@ -218,9 +234,14 @@ class ViewController: UIViewController,RecordCellDelegate, AVAudioRecorderDelega
     
     
     @objc func checkIfPlaying() {
-        if !audioPlayer.isPlaying {
-            currentlyLitPlayButton!.setImage(UIImage(systemName:"play"), for: .normal)
-            playTimer?.invalidate()
+        if !audioPlayer.isPlaying
+            {
+            if !(currentlyLitPlayButton!.image(for: .normal) == UIImage(systemName:"play.circle"))
+            {
+                currentlyLitPlayButton!.setImage(UIImage(systemName:"play"), for: .normal)
+                playTimer?.invalidate()
+             }
+            
         }
     }
     
