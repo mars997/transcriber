@@ -65,8 +65,7 @@ class ViewController: UIViewController,RecordCellDelegate, AVAudioRecorderDelega
                 if prevPlayButton != (sender as! UIButton)
                 {
                     prevPlayButton.setImage(UIImage(systemName:"play"), for: .normal)
-                    audioPlayer.pause()
-                    return
+
                 }
 
                 
