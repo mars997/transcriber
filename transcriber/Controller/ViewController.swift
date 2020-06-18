@@ -48,7 +48,6 @@ class ViewController: UIViewController,RecordCellDelegate, AVAudioRecorderDelega
              
                 if (sender as! UIButton).image(for: .normal) == UIImage(systemName:"play.circle")
                 {
-                    print("AudioPlayerNeedtoResume")
                     (sender as! UIButton).setImage(UIImage(systemName:"pause"), for: .normal)
                     
                     audioPlayer.play()
@@ -63,7 +62,13 @@ class ViewController: UIViewController,RecordCellDelegate, AVAudioRecorderDelega
                     return
                 }
                 
-                
+                if prevPlayButton != (sender as! UIButton)
+                {
+                    prevPlayButton.setImage(UIImage(systemName:"play"), for: .normal)
+                    audioPlayer.pause()
+                    return
+                }
+
                 
             }
             
