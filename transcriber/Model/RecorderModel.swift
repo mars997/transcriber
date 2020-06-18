@@ -112,7 +112,12 @@ class RecorderModel:NSObject,AVAudioRecorderDelegate
                 recordedDuration = audioRecorder.currentTime.stringFromTimeInterval()
                 audioRecorder.stop()
                 audioRecorder = nil
-                recorderState = RecorderK.stopped //"Stopped"
+                do {
+                try recordingSession.setCategory(AVAudioSession.Category.playAndRecord,
+                options:AVAudioSession.CategoryOptions.defaultToSpeaker)
+                } catch {}
+                    
+                    recorderState = RecorderK.stopped //"Stopped"
                 
                 //here we have to record the info to Record Object Relam
                 
@@ -144,6 +149,21 @@ class RecorderModel:NSObject,AVAudioRecorderDelegate
         }
         
     }
+
+    func delete(_ record: Record)
+    {
+        do {
+            try self.realm.write {
+                self.realm.delete(record)
+            }
+        }
+        catch
+        {  print ("Error Deleting Record")
+            
+        }
+        
+    }
+    
     
     func updateTitle(_ title: String)
     {

@@ -15,8 +15,6 @@ import RealmSwift
 
 class ViewController: UIViewController,RecordCellDelegate, AVAudioRecorderDelegate,UITableViewDelegate,UITableViewDataSource {
     
-    
-    
     var recordingSession:AVAudioSession!
     //    var audioRecorder:AVAudioRecorder!
     var audioPlayer:AVAudioPlayer!
@@ -24,32 +22,24 @@ class ViewController: UIViewController,RecordCellDelegate, AVAudioRecorderDelega
     let recorderModel = RecorderModel()
     var numberOfRecords = 0
     var currentlyLitPlayButton:UIButton?
-    var playTimer:Timer?
-    var recordTimer:Timer?
+    var playTimer:Timer?        //timer to keep track of record being played
+    var recordTimer:Timer?      //timer to keep track of recording in progress
     
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var pauseButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var durationLabel: UILabel!
-    
-    
-    
-    
+
+    //MARK: Cell Title Changed
     func titleFieldChanged(id: Int, sender: Any) {
         let recorderModel = RecorderModel()
         recorderModel.loadRecords(id: String(id))
         let titleField = (sender as! UITextField)
         recorderModel.updateTitle(titleField.text!)
-        
     }
     
     
-    
-    
-    
-    
-    
-    
+    //MARK: Play Button Pressed
     func playButtonPressed(id: Int,sender: Any) {
         do
         {
@@ -77,13 +67,13 @@ class ViewController: UIViewController,RecordCellDelegate, AVAudioRecorderDelega
     }
     
     
-    
+    //MARK: Transcribe Button Pressed
     func transcribeButtonPressed(id: Int,sender: Any) {
         uploadFile(with: ("\(id).mp4"))
         
     }
     
-    
+    //MARK: Pause Button Pressed
     @IBAction func pausePressed(_ sender: Any) {
         let (status, _) = recorderModel.startStopPauseRecorder(RecorderK.pauseButton)
         
@@ -98,6 +88,7 @@ class ViewController: UIViewController,RecordCellDelegate, AVAudioRecorderDelega
         
     }
     
+    //MARK: Record Button Pressed
     @IBAction func recordPressed(_ sender: Any) {
         
         let (status, _) = recorderModel.startStopPauseRecorder(RecorderK.recordButton)
@@ -116,18 +107,15 @@ class ViewController: UIViewController,RecordCellDelegate, AVAudioRecorderDelega
         }
     }
     
-    
-    
     // MARK: viewDidLoad
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         self.tableView.rowHeight = 60
-        
         recorderModel.loadRecords()
         
         tableView.register(UINib(nibName:"RecordCell", bundle: nil), forCellReuseIdentifier: "ReusableRecordCell")
         
+        //Obtaining the user permission to access microphone
         AVAudioSession.sharedInstance().requestRecordPermission { (hasPermission) in
             if hasPermission
             {print ("Accepted")}
@@ -156,6 +144,14 @@ class ViewController: UIViewController,RecordCellDelegate, AVAudioRecorderDelega
     
     
     // MARK: Table View Settings
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            recorderModel.delete((recorderModel.records?[indexPath.row])!)
+            tableView.deleteRows(at: [indexPath], with: .bottom)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section:Int) -> Int {
         
         

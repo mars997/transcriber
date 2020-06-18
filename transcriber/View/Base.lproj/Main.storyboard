@@ -86,12 +86,12 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Recorder" id="rp1-y5-Aj0">
-                        <barButtonItem key="leftBarButtonItem" title="Credits" id="Z6U-77-ELb">
+                        <barButtonItem key="leftBarButtonItem" title="Credits" image="dollarsign.circle" catalog="system" id="Z6U-77-ELb">
                             <connections>
                                 <segue destination="9dy-oA-8Dx" kind="presentation" id="Gh4-C8-a7B"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Settings" id="m9E-G7-LOf">
+                        <barButtonItem key="rightBarButtonItem" title="Settings" image="gear" catalog="system" id="m9E-G7-LOf">
                             <connections>
                                 <segue destination="EEn-vv-aYs" kind="presentation" id="9cA-Pw-ozh"/>
                             </connections>
@@ -174,6 +174,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="dollarsign.circle" catalog="system" width="128" height="121"/>
+        <image name="gear" catalog="system" width="128" height="119"/>
         <image name="mic" catalog="system" width="108" height="128"/>
         <image name="pause.circle" catalog="system" width="128" height="121"/>
         <namedColor name="Color">
