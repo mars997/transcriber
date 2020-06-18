@@ -8,8 +8,19 @@
 
 import UIKit
 
+protocol RecordCellDelegate {
+    func playButtonPressed(id: Int)
+    func transcribeButtonPressed(id: Int)
+}
+
 class RecordCell: UITableViewCell {
 
+    
+    var cellDelegate: RecordCellDelegate?
+//    var id: Int?
+    
+    static var recorderModel = RecorderModel()
+    
     @IBOutlet weak var titleText: UITextField!
     
     
@@ -21,6 +32,21 @@ class RecordCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     
     @IBOutlet weak var durationLabel: UILabel!
+    
+    
+    @IBOutlet weak var playPressed: UIButton!
+    
+    
+    @IBOutlet weak var transcribePressed: UIButton!
+    
+    
+    @IBAction func playPressed(_ sender: Any) {
+        cellDelegate?.playButtonPressed(id: (sender as AnyObject).tag)
+    }
+    
+    @IBAction func transcribePressed(_ sender: Any) {
+        cellDelegate?.transcribeButtonPressed(id: (sender as AnyObject).tag)
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

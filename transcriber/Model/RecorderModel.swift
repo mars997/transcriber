@@ -29,7 +29,7 @@ class RecorderModel:NSObject,AVAudioRecorderDelegate
     
     func loadRecords()
     {
-        records = realm.objects(Record.self).sorted(byKeyPath: "id", ascending: false)
+        records = realm.objects(Record.self).sorted(byKeyPath: "startTime", ascending: false)
     }
     
     
@@ -46,7 +46,7 @@ class RecorderModel:NSObject,AVAudioRecorderDelegate
              let minute = components.minute
              let second = components.second
 
-             let now_string = String(year!) + "/" + String(month!) + "/" + String(day!) + " " + String(hour!)  + ":" + String(minute!) + ":" +  String(second!)
+             let now_string = String(year!) + "/" + String(format: "%02d",month!) + "/" + String(format: "%02d",day!) + " " + String(format: "%02d",hour!)  + ":" + String(format: "%02d",minute!) + ":" +  String(format: "%02d",second!)
 
              return now_string
 

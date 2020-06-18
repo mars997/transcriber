@@ -13,7 +13,25 @@ import AWSCognito
 import AWSS3
 import RealmSwift
 
-class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDelegate,UITableViewDataSource {
+class ViewController: UIViewController,RecordCellDelegate, AVAudioRecorderDelegate,UITableViewDelegate,UITableViewDataSource {
+    func playButtonPressed(id: Int) {
+        do
+          {
+              let path =  getDirectory().appendingPathComponent("\(id).mp4" )
+              audioPlayer = try AVAudioPlayer(contentsOf: path)
+              audioPlayer.play()
+         //     uploadFile(with: ("\(indexPath.row + 1).mp4"))
+          }
+          catch{
+              
+          }
+    }
+    
+    func transcribeButtonPressed(id: Int) {
+        uploadFile(with: ("\(id).mp4"))
+
+    }
+    
     
     var recordingSession:AVAudioSession!
 //    var audioRecorder:AVAudioRecorder!
@@ -114,24 +132,12 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
         
         cell.playButton.tag = Int((recorderModel.records?[indexPath.row].id)!) ?? 0
         cell.transcribeButton.tag = Int((recorderModel.records?[indexPath.row].id)!) ?? 0
+        cell.cellDelegate = self
+  //      cell.id = Int((recorderModel.records?[indexPath.row].id)!)
 
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //let path = getDirectory().appendingPathComponent("\(indexPath.row + 1).mp4")
-        do
-        {
-            print(recorderModel.records?[indexPath.row].url ?? "")
-            let path =  getDirectory().appendingPathComponent((recorderModel.records?[indexPath.row].id ?? "") + ".mp4" )
-            audioPlayer = try AVAudioPlayer(contentsOf: path)
-            audioPlayer.play()
-       //     uploadFile(with: ("\(indexPath.row + 1).mp4"))
-        }
-        catch{
-            
-        }
-    }
     
 
     // MARK: Helper Functions

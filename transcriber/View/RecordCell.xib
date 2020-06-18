@@ -30,7 +30,7 @@
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="27" weight="thin"/>
                                         </state>
                                         <connections>
-                                            <action selector="playPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="145-pc-jXj"/>
+                                            <action selector="playPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="98V-cd-lck"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="transcribeButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O5n-kB-CUW">
@@ -42,7 +42,7 @@
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="27" scale="default" weight="thin"/>
                                         </state>
                                         <connections>
-                                            <action selector="transcribePressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="z5d-BC-fcg"/>
+                                            <action selector="transcribePressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="0GL-pN-EMc"/>
                                         </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="229" horizontalCompressionResistancePriority="748" verticalCompressionResistancePriority="748" restorationIdentifier="titleText" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="80z-VA-qmL">

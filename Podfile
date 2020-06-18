@@ -11,5 +11,5 @@
   pod 'AWSS3'
   pod 'RealmSwift'
   pod 'IQKeyboardManagerSwift'
-  
+  pod 'BFWControls'
 end
