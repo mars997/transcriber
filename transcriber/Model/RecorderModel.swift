@@ -22,6 +22,16 @@ class RecorderModel:NSObject,AVAudioRecorderDelegate
     var startTime = ""
     var recordedDuration = ""
     var recorderState = ""
+    lazy var filename = getDirectory().appendingPathComponent("\(numberOfRecords).mp4")
+    
+    var records: Results<Record>?
+    
+    
+    func loadRecords()
+    {
+        records = realm.objects(Record.self).sorted(byKeyPath: "id", ascending: false)
+    }
+    
     
     func getNow() -> String{
 
@@ -47,7 +57,7 @@ class RecorderModel:NSObject,AVAudioRecorderDelegate
     
     func startStopPauseRecorder(_ button:String) -> (status: String, fileNane: String?) {
         
-        let filename = getDirectory().appendingPathComponent("\(numberOfRecords).mp4")
+        
         
         if audioRecorder == nil // Recorder State is stopped
         {
@@ -55,7 +65,7 @@ class RecorderModel:NSObject,AVAudioRecorderDelegate
             
             if button == RecorderK.recordButton
             {numberOfRecords += 1
-            
+            filename = getDirectory().appendingPathComponent("\(numberOfRecords).mp4")
             startTime = getNow()
                 
             let settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC), AVSampleRateKey: 44100, AVNumberOfChannelsKey: 1, AVEncoderAudioQualityKey: AVAudioQuality.max.rawValue]
