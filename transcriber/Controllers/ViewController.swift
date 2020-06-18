@@ -11,6 +11,8 @@ import AVKit
 import AVFoundation
 import AWSCognito
 import AWSS3
+import AWSAuthUI
+import AWSAuthCore
 
 class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDelegate,UITableViewDataSource {
     var recordingSession:AVAudioSession!
@@ -18,10 +20,20 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
     var audioPlayer:AVAudioPlayer!
     
     let bucketName = "raw-audio-to-transcribe"
-    //let bucketName = "mp3-transcribe-sentiment-dynamodb-bucket"
     @IBOutlet weak var buttonLabel: UIButton!
-    
     @IBOutlet weak var myTableView: UITableView!
+    
+    var voiceRecords: [VoiceRecord] = [
+        VoiceRecord(user: "hamed@exoptima.com", title: "first conversation",    audioPath: getDirectory().appendingPathComponent("20.mp4"),
+                    date: Date.init()),
+        VoiceRecord(user: "hamed@exoptima.com", title: "second conversation",    audioPath: getDirectory().appendingPathComponent("21.mp4"),
+                    date: Date.init()),
+        VoiceRecord(user: "hamed@exoptima.com", title: "third conversation",    audioPath: getDirectory().appendingPathComponent("22.mp4"),
+                    date: Date.init())
+
+
+    ]
+    
     var numberOfRecords = 0
     @IBAction func record(_ sender: Any) {
         //Check if we have an active recorder
@@ -30,7 +42,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
             numberOfRecords += 1
             let filename = getDirectory().appendingPathComponent("\(numberOfRecords).mp4")
         
-            let settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC), AVSampleRateKey: 16000, AVNumberOfChannelsKey: 1, AVEncoderAudioQualityKey: AVAudioQuality.max.rawValue]
+            let settings = [AVFormatIDKey: Int(kAudioFormatMPEG4AAC), AVSampleRateKey: 44100, AVNumberOfChannelsKey: 1, AVEncoderAudioQualityKey: AVAudioQuality.max.rawValue]
             
             
             //start audio recording
@@ -58,9 +70,28 @@ class ViewController: UIViewController, AVAudioRecorderDelegate,UITableViewDeleg
     }
     
     
+    func showSignIn() {
+        if !AWSSignInManager.sharedInstance().isLoggedIn {
+            AWSAuthUIViewController
+                .presentViewController(with: self.navigationController!,
+                           configuration: nil,
+                           completionHandler: {(provider: AWSSignInProvider, error: Error?) in
+                    if error != nil {
+                        print("Error occured: \(String(describing: error))")
+                    } else {
+                        print("Logged in with provider: \(provider.identityProviderName) with Token: \(provider.token())")
+                    }
+                })
+        }
+    }
+      
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        showSignIn() 
         
         //Setting up session
         
